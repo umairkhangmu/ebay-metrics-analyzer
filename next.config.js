@@ -2,7 +2,7 @@
 const nextConfig = {
   // Enable experimental features (updated for Next.js 14)
   experimental: {
-    // Remove appDir as it's now standard in Next.js 14
+    // Server components external packages
     serverComponentsExternalPackages: ['bcrypt', 'jsonwebtoken'],
   },
   
@@ -34,7 +34,7 @@ const nextConfig = {
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
   },
   
-  // Security headers (moved from api configuration) 
+  // Security headers
   headers: async () => {
     return [
       {
