@@ -1,16 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable app directory features
+  // Enable experimental features (updated for Next.js 14)
   experimental: {
-    appDir: true,
-    // Support for external packages in server components
+    // Remove appDir as it's now standard in Next.js 14
     serverComponentsExternalPackages: ['bcrypt', 'jsonwebtoken'],
   },
   
   // Enable image optimization
   images: {
     domains: ['ebay.com', 'i.ebayimg.com'],
-    // Optional: Configure image sizes
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
   },
   
@@ -19,12 +17,10 @@ const nextConfig = {
   
   // Configure webpack for compatibility with certain packages
   webpack: (config, { isServer }) => {
-    // Handle server-side packages that need special treatment
     if (isServer) {
       config.externals = [...config.externals, 'bcrypt'];
     }
     
-    // Optimize bundle size
     config.optimization = {
       ...config.optimization,
       moduleIds: 'deterministic',
@@ -38,16 +34,8 @@ const nextConfig = {
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000',
   },
   
-  // API route configuration
-  api: {
-    bodyParser: {
-      sizeLimit: '1mb',
-    },
-    responseLimit: '4mb',
-  },
-  
-  // Optional: Configure headers for security
-  headers: async ()  => {
+  // Security headers (moved from api configuration) 
+  headers: async () => {
     return [
       {
         source: '/(.*)',
